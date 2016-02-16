@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "ctype.h"
+#include <ctype.h>
 #include "token.h"
 
 static char* current_line;
@@ -20,12 +20,17 @@ int valid_char(char c){
 void get_token(Token* token){
 
 	char current_char = '\0';
-	/*token->str = (char*)malloc(sizeof(char)*strlen(current_line));*/
 	int token_str_idx = 0;
 	TokenStatus status = INIT_STATUS;
 	token->kind = BAD_TOKEN;
 
 	while(current_line[idx] != '\0'){
+
+		if(idx >= MAX_TOKEN_SIZE){
+			printf("token too long\n");
+			exit(1);
+		}
+
 		current_char = current_line[idx];
 
 		if(!valid_char(current_char)){
@@ -102,27 +107,22 @@ int main(int argc, char const *argv[])
 	
 	printf("enter expressions: \n");
 
-	char* buf = (char*)malloc(sizeof(char)*100);
-	Token* token;
-	token = (Token*)malloc(sizeof(Token));
+	char buf[1024];
+	Token token;
 	if(gets(buf)){
 		printf("will parse: %s\n", buf);
 		set_line(buf);
-		token->str = (char*)malloc(sizeof(char)*strlen(buf));
 		while(1){
-			get_token(token);
-			if(token->kind == EOF_TOKEN || token->kind == BAD_TOKEN){
+			get_token(&token);
+			if(token.kind == EOF_TOKEN || token.kind == BAD_TOKEN){
 				break;
 			}
-			if(token->kind == NUMBER_TOKEN){
-				printf("source str: %s, val: %lf\n", token->str, token->val);
+			if(token.kind == NUMBER_TOKEN){
+				printf("source str: %s, val: %lf\n", token.str, token.val);
 			}else{
-				printf("source str: %s, current index: %d\n", token->str, idx);
+				printf("source str: %s, current index: %d\n", token.str, idx);
 			}
 		}
-		free(token->str);
 	}
-	free(token);
-	free(buf);
 	return 0;
 }

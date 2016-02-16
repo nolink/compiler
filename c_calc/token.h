@@ -1,6 +1,8 @@
 #ifndef CALC_TOKEN_HEADER
 #define CALC_TOKEN_HEADER
 
+#define MAX_TOKEN_SIZE (100)
+
 typedef enum {  
 
 	BAD_TOKEN,
@@ -25,10 +27,14 @@ typedef enum {
 typedef struct 
 {
 	
-	char* str;
+	char str[MAX_TOKEN_SIZE];
 	TokenKind kind;
 	double val;
 
 } Token;
+
+
+void set_line(char* buf);
+void get_token(Token* token);
 
 #endif
