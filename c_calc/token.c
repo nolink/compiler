@@ -13,10 +13,6 @@ void set_line(char* line){
 	idx = 0;
 }
 
-int valid_char(char c){
-	return isspace(c) || isdigit(c) || c == '+' || c == '-' || c == '*' || c == '/' || c == '.';
-}
-
 void get_token(Token* token){
 
 	char current_char = '\0';
@@ -32,11 +28,6 @@ void get_token(Token* token){
 		}
 
 		current_char = current_line[idx];
-
-		if(!valid_char(current_char)){
-			printf("invalid char at index %d\n", idx);
-			return;
-		}
 
 		if(!isdigit(current_char) && current_char != '.' && 
 			(status == IN_INT_STATUS || status == IN_FRAC_STATUS)){
@@ -70,7 +61,7 @@ void get_token(Token* token){
 						token->kind = SUB_OP_TOKEN;
 						return;
 					case '*':
-						token->kind = DIV_OP_TOKEN;
+						token->kind = MUL_OP_TOKEN;
 						return;
 					case '/':
 						token->kind = DIV_OP_TOKEN;
@@ -97,11 +88,11 @@ void get_token(Token* token){
 		token->kind = NUMBER_TOKEN;
 		sscanf(token->str, "%lf", &(token->val));
 	}else{
-		token->kind = EOF_TOKEN;
+		token->kind = EOL_TOKEN;
 	}
 }
 
-
+/*
 int main(int argc, char const *argv[])
 {
 	
@@ -114,7 +105,7 @@ int main(int argc, char const *argv[])
 		set_line(buf);
 		while(1){
 			get_token(&token);
-			if(token.kind == EOF_TOKEN || token.kind == BAD_TOKEN){
+			if(token.kind == EOL_TOKEN || token.kind == BAD_TOKEN){
 				break;
 			}
 			if(token.kind == NUMBER_TOKEN){
@@ -126,3 +117,4 @@ int main(int argc, char const *argv[])
 	}
 	return 0;
 }
+*/

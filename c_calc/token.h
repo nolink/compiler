@@ -11,7 +11,7 @@ typedef enum {
 	SUB_OP_TOKEN,
 	MUL_OP_TOKEN,
 	DIV_OP_TOKEN,
-	EOF_TOKEN
+	EOL_TOKEN
 
 } TokenKind;
 
