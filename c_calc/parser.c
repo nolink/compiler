@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include "token.h"
 
-Token* pre_read_token;
+Token pre_read_token;
 int is_pre_read_exists;
 
 void my_get_token(Token* token){
 	if(is_pre_read_exists){
-		token = pre_read_token;
+		*token = pre_read_token;
 		is_pre_read_exists = 0;
 	}else{
 		get_token(token);
@@ -16,7 +16,7 @@ void my_get_token(Token* token){
 }
 
 void unget_token(Token* token){
-	pre_read_token = token;
+	pre_read_token = *token;
 	is_pre_read_exists = 1;
 }
 
