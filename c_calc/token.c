@@ -66,6 +66,12 @@ void get_token(Token* token){
 					case '/':
 						token->kind = DIV_OP_TOKEN;
 						return;
+					case '(':
+						token->kind = LEFT_BRACKET_TOKEN;
+						return;
+					case ')':
+						token->kind = RIGHT_BRACKET_TOKEN;
+						return;
 				}
 			}
 		}else if(status == IN_INT_STATUS){
